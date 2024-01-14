@@ -15,10 +15,12 @@
     "lint:fix": "eslint --fix --ext .ts,.js,.json,.tsx src/",
     "build:pre": "rm -rf dist/",
     "build:compile": "tsc && tsc-alias",
-    "preinstall": "npx -y only-allow pnpm"
+    "preinstall": "npx -y only-allow pnpm",
+    "migration:create": "pnpm exec pnpx mikro-orm migration:create",
+    "migration:up": "pnpm exec pnpx mikro-orm migration:up",
+    "migration:down": "pnpm exec pnpx mikro-orm migration:down"
   },
   "dependencies": {
-    "@fastify/autoload": "^5.0.0",
     "@fastify/env": "^4.3.0",
     "@fastify/postgres": "^5.2.2",
     "@fastify/sensible": "^5.0.0",
