@@ -1,6 +1,7 @@
 import Fastify, { FastifyInstance } from 'fastify';
 import { setupRoutes } from './routes';
 import envPlugin from '@/plugins/env';
+import { fastifyPostgres } from '@fastify/postgres';
 
 export async function setupFastify(): Promise<FastifyInstance> {
   console.info(`setting up fastify...`);
@@ -12,6 +13,9 @@ export async function setupFastify(): Promise<FastifyInstance> {
 
   // plugins
   await app.register(envPlugin);
+  await app.register(fastifyPostgres, {
+    connectionString: process.env.POSTGRES_CONNECTION,
+  });
   return app;
 }
 
