@@ -16,7 +16,6 @@ export default async function envPlugin(fastify: FastifyInstance) {
       },
       POSTGRES_CONNECTION: {
         type: 'string',
-        default: 'postgres://elirium@localhost:5432/postgres',
       },
     },
   };
