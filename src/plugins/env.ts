@@ -1,7 +1,12 @@
-import fastifyEnv from '@fastify/env';
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyPluginCallback } from 'fastify';
+import fastifyEnv, { FastifyEnvOptions } from '@fastify/env';
+import fastifyPlugin from 'fastify-plugin';
 
-export default async function envPlugin(fastify: FastifyInstance) {
+const configPlugin: FastifyPluginCallback = async (
+  fastify: FastifyInstance,
+  options: unknown,
+  done: (error?: Error) => void,
+) => {
   const schema = {
     type: 'object',
     required: ['PORT', 'HOST', 'POSTGRES_CONNECTION'],
@@ -20,13 +25,14 @@ export default async function envPlugin(fastify: FastifyInstance) {
     },
   };
 
-  const options = {
+  const configOptions: FastifyEnvOptions = {
     confKey: 'config',
     schema: schema,
     data: process.env,
     dotenv: true,
-    removeAdditional: true,
   };
 
-  fastify.register(fastifyEnv, options);
-}
+  return fastifyEnv(fastify, configOptions, done);
+};
+
+export default fastifyPlugin(configPlugin);
